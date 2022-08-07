@@ -1,7 +1,7 @@
 
 .header {
     
-    margin-bottom: 7rem;
+    margin-bottom: 2rem;
     .client-tab {
       h1 {
         font-size: 1rem;
@@ -32,7 +32,7 @@
       background-repeat: no-repeat;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;    
+      justify-content: center;    
       // border: 10px solid #FFB321;
       @include mq($until: desktop) {
         background-position: 50%;
@@ -92,7 +92,7 @@
     }
 
     .client-tab {
-      background-color: #F9F2DD;
+      background-color: white;
       display: inline-block;
       padding: .25rem 1rem;
       a {
@@ -102,18 +102,20 @@
       }
     }
     .main-title {
-      color: #F9F2DD;
-      background-color: #88754D;
+      color: white;
+      text-align: center;
       display: inline-block;
-      max-width: 940px;
+      max-width: 40rem;
       padding: 1rem;
+      margin-top: 5rem;
       h1 {
         margin: 0;
         font-weight: 400;
       }
     }
+
     .title-block {
-      margin-bottom: -6rem;
+      margin-top: 10rem;
     }
 
   }

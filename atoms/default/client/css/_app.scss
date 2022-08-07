@@ -4,6 +4,14 @@
   --brand-alt: #FFF06B;
   --brand-alt-b: #D8E9E7;
   --button-bg-blue: #2B317A;
+
+  --brand-red: #EB5A43;
+  --brand-blue: #003764;
+  --brand-beige: #FFF3EB;
+  --brand-green: #2A8653;
+  --brand-black: #121212;
+  --brand-avo: #F0F8DD;
+  --switch-color: var(--brand-green);
 }
 
 // body {
@@ -75,7 +83,7 @@ h1, h2 {
     font-family: "Guardian Egyptian Web", "Display Sans", serif;
   }
   @include mq(tablet) {
-    font-size: 64/16 + rem;
+    font-size: 50/16 + rem;
   }
 }
 
@@ -129,10 +137,10 @@ p {
 }
 
 #Glabs {
-  background-color: #57534C;
+  background-color: #FFF5E4;
   
   &, .content {
-    color: #F9F2DD;
+    color: var(--brand-black);
   }
 
   // .content {
@@ -154,6 +162,10 @@ p {
 
 #Glabs section {
   padding: 2rem 0;
+}
+
+.margin-auto {
+  margin: auto;
 }
 
 section.footer {
@@ -296,7 +308,7 @@ section.footer {
 .intro-body {
   position: relative;
    @include mq(tablet) {
-     padding-left: 25%;
+     padding-right: 25%;
    }
 }
 
@@ -313,7 +325,7 @@ section.footer {
 
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     padding: 5px 0 15px;
     width: 15%;
     margin-top: 0;

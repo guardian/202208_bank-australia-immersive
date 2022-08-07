@@ -6,7 +6,8 @@ const initialState = {
     sheets: null,
     content: {},
     UI: {
-        view: 'home'
+        view: 'home',
+        year: null
     }
 };
 
@@ -15,7 +16,7 @@ export const assetsPath = "<%= path %>";
 export const 
     ACTION_DATA_LOADED = 'action_data_loaded',
     ACTION_SET_SHEETS = 'action_set_sheets',
-    ACTION_SET_SCORE = 'action_set_score',
+    ACTION_SET_YEAR = 'action_set_year',
     ACTION_SET_VIEW = 'action_set_view'
     ;
 
@@ -56,8 +57,9 @@ const rootReducer = (state = initialState, action) => {
             break;
         case ACTION_DATA_LOADED:
             return {...state, dataLoaded: true};
-        case ACTION_SET_SCORE:
-            return {...state, UI: {...state.UI, score: action.payload}};        
+        case ACTION_SET_YEAR:
+            console.log(action.payload)
+            return {...state, UI: {...state.UI, year: action.payload}};        
         case ACTION_SET_VIEW:
             return {...state, UI: {...state.UI, view: action.payload}};
         default:
