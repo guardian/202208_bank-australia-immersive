@@ -21,7 +21,7 @@
     "core-js": "^3.3.3",
     "del": "^5.1.0",
     "framer-motion": "^7.0.0",
-    "gsap": "^3.6.0",
+    "gsap": "^3.11.1",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
     "gulp-file": "^0.4.0",

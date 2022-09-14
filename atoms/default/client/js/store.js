@@ -6,7 +6,7 @@ const initialState = {
     sheets: null,
     content: {},
     UI: {
-        view: 'home',
+        view: 'red',
         year: null
     }
 };

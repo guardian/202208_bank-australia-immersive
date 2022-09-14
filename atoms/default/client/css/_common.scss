@@ -52,6 +52,24 @@ figure.element {
     height: 100%;
 }
 
+.container {
+  &.boxed {
+    max-width: 48rem;
+    margin: auto;
+  }
+}
+
+.padded-y {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.pappded-x {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.padded {
+  padding: 2rem;
+}
 // body::-webkit-scrollbar-track
 // {
 // 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);

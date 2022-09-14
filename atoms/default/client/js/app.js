@@ -9,7 +9,9 @@ import RelatedContent from "shared/js/RelatedContent";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import store, {fetchData, assetsPath, ACTION_SET_VIEW, ACTION_SET_YEAR } from "./store";
-import {IconGlobeTemp, Logo} from "./Icons";
+import {IconGlobeTemp, IconGreen, IconRed, IconRedSmall, Logo} from "./Icons";
+// import {GreenG1S1, GreenG1S3, GreenG2S2} from "./panels";
+import * as ContentPanels from "./panels";
 import {SwitchTransition, Transition, TransitionGroup} from "react-transition-group";
 import {Provider, useSelector, useDispatch} from "react-redux";
 import { useEffect, useRef, useState } from "preact/hooks";
@@ -17,6 +19,133 @@ import CardGrid from "./CardGrid";
 // import {motion, AnimatePresence} from 'framer-motion';
 
 let dispatch;
+
+const slideData = {
+    green: {
+        slides: [
+            {
+                group: '2022',
+                content: [
+                    ContentPanels.GreenG1S1,
+                    null,
+                    ContentPanels.GreenG1S3,
+                ],
+                images: [
+                    '2022-1.jpg',
+                    '2022-2.jpg',
+                    '2022-3.jpg',
+                ]
+            },
+            {
+                group: '2030',
+                content: [
+                    ContentPanels.GreenG2S1,
+                    ContentPanels.GreenG2S2,
+                    null,
+                ],
+                images: [
+                    '2030-1.jpg',
+                    '2030-2.jpg',
+                    '2030-3.jpg',
+                ]
+            },
+            {
+                group: '2040',
+                content: [
+                    ContentPanels.GreenG3S1,
+                    ContentPanels.GreenG3S2,
+                    ContentPanels.GreenG3S3,
+                ],
+                images: [
+                    '2040-1.jpg',
+                    '2040-2.jpg',
+                    '2040-3.jpg',
+                ]
+            },
+            {
+                group: '2050',
+                content: [
+                    ContentPanels.GreenG4S1,
+                    ContentPanels.GreenG4S2,
+                    ContentPanels.GreenG4S3,
+                    ContentPanels.GreenG4S4,
+                ],
+                images: [
+                    '2050-1.jpg',
+                    '2050-2.jpg',
+                    '2050-3.jpg',
+                    '2050-4.jpg',
+                ]
+            }
+        ]
+    },
+    red: {
+        slides: [
+            {
+                group: '1.1',
+                content: [
+                    ContentPanels.GreenG1S1,
+                    null,
+                    ContentPanels.GreenG1S3,
+                    ContentPanels.GreenG1S3,
+                ],
+                images: [
+                    'one-1.jpg',
+                    'one-2.jpg',
+                    'one-3.jpg',
+                    'one-4.jpg',
+                ]
+            },
+            {
+                group: '1.5',
+                content: [
+                    ContentPanels.GreenG1S1,
+                    null,
+                    ContentPanels.GreenG1S3,
+                    ContentPanels.GreenG1S3,
+                ],
+                images: [
+                    'two-1.jpg',
+                    'two-2.jpg',
+                    'two-3.jpg',
+                    'two-4.jpg',
+                ]
+            },
+            {
+                group: '2',
+                content: [
+                    ContentPanels.GreenG1S1,
+                    null,
+                    ContentPanels.GreenG1S3,
+                    ContentPanels.GreenG1S3,
+                    ContentPanels.GreenG1S3,
+                ],
+                images: [
+                    'three-1.jpg',
+                    'three-2.jpg',
+                    'three-3.jpg',
+                    'three-4.jpg',
+                    'three-5.jpg',
+                ]
+            },
+            {
+                group: '3',
+                content: [
+                    ContentPanels.GreenG1S1,
+                    null,
+                    ContentPanels.GreenG1S3,
+                    ContentPanels.GreenG1S3,
+                ],
+                images: [
+                    'four-1.jpg',
+                    'four-2.jpg',
+                    'four-3.jpg',
+                    'four-4.jpg',
+                ]
+            }
+        ]
+    }
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,8 +170,20 @@ const scrollToTop = () => {
 const Container = ({children, className}) => {
     return (
         // <div className="md:container  md:mx-auto">
-        <div className={`GlabsContainer ${className}`}>
-            <div className="ResponsiveContainer">
+        <div className={`container ${className}`}>
+            <div className="container-inner">
+                {children}
+
+            </div>
+        </div>
+    )
+}
+
+const BoxedContainer = ({children, className}) => {
+    return (
+        // <div className="md:container  md:mx-auto">
+        <div className={`container boxed ${className}`}>
+            <div className="container-inner">
                 {children}
 
             </div>
@@ -118,7 +259,7 @@ const Footer = ({content, related, shareUrl}) => {
             <section className="footer dark-text">
                 <div className="content">
                     <div className="cta-wrap">
-                        <div className="cta" {...setHtml(content.cta)} />
+                        
                         <div className="share">
                             <SocialBar title={content.shareTitle} url={shareUrl} />
                         </div>
@@ -160,6 +301,7 @@ const Break = () => <div className="break"><span></span><span></span><span></spa
 
 const ImagePanels = () => {
     const ref = useRef(ref);
+    const view = useSelector(s=>s.UI.view);
 
     useEffect(()=>{
         gsap.timeline({
@@ -170,16 +312,19 @@ const ImagePanels = () => {
                 toggleClass: 'active',
             }
         })
-    },[]);
+    },[view]);
 
     return (
     <div ref={ref} className="main-panel">
         <div className="panel-wrap">
-            <SlideGroup year="2022" />
-            <SlideGroup year="2030" />
-            <SlideGroup year="2040" />
-            <SlideGroup year="2050" />
-            <SlideNav />
+            {
+                slideData[view || 'green'].slides.map((v,i)=>{
+                    return <SlideGroup year={v.group} key={i} data={v} view={view|| 'green'}/>
+                })
+            }
+
+            { (!view || view === 'green') && <SlideNavGreen />}
+            { (view === 'red') && <SlideNavRed />}
             
             
         </div>
@@ -189,7 +334,7 @@ const ImagePanels = () => {
 
 }
 
-const SlideNav = () => {
+const SlideNavGreen = () => {
     const year = useSelector(s=>s.UI.year);
     const isActive = yr => yr === year ? 'active': '';
     return (
@@ -198,13 +343,17 @@ const SlideNav = () => {
                 <li className={`${isActive('2022')}`} data-year="2022"><a href="#">2022</a></li>
                 <li className={`${isActive('2022')}`} data-year="2022"><i /></li>
                 <li className={`${isActive('2022')}`} data-year="2022"><i /></li>
+                <li className={`${isActive('2022')}`} data-year="2022"><i /></li>
                 <li className={`${isActive('2030')}`} data-year="2030"><a href="#">2030</a></li>
+                <li className={`${isActive('2030')}`} data-year="2030"><i /></li>
                 <li className={`${isActive('2030')}`} data-year="2030"><i /></li>
                 <li className={`${isActive('2030')}`} data-year="2030"><i /></li>
                 <li className={`${isActive('2040')}`} data-year="2040"><a href="#">2040</a></li>
                 <li className={`${isActive('2040')}`} data-year="2040"><i /></li>
                 <li className={`${isActive('2040')}`} data-year="2040"><i /></li>
+                <li className={`${isActive('2040')}`} data-year="2040"><i /></li>
                 <li className={`${isActive('2050')}`} data-year="2050"><a href="#">2050</a></li>
+                <li className={`${isActive('2050')}`} data-year="2050"><i /></li>
                 <li className={`${isActive('2050')}`} data-year="2050"><i /></li>
                 <li className={`${isActive('2050')}`} data-year="2050"><i /></li>
                 <li className={`${isActive('2050')}`} data-year="2050"><i /></li>
@@ -212,8 +361,39 @@ const SlideNav = () => {
         </nav>
     )
 }
+const SlideNavRed = () => {
+    const year = useSelector(s=>s.UI.year);
+    const isActive = yr => yr === year ? 'active': '';
+    return (
+        <nav>
+            <ul>
+                <li className={`${isActive('1.1')}`} data-year="1.1"><a href="#">1.1</a></li>
+                <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
+                <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
+                <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
+                <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
+                <li className={`${isActive('1.5')}`} data-year="1.5"><a href="#">1.5</a></li>
+                <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
+                <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
+                <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
+                <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
+                <li className={`${isActive('2')}`} data-year="2"><a href="#">2</a></li>
+                <li className={`${isActive('2')}`} data-year="2"><i /></li>
+                <li className={`${isActive('2')}`} data-year="2"><i /></li>
+                <li className={`${isActive('2')}`} data-year="2"><i /></li>
+                <li className={`${isActive('2')}`} data-year="2"><i /></li>
+                <li className={`${isActive('2')}`} data-year="2"><i /></li>
+                <li className={`${isActive('3')}`} data-year="3"><a href="#">3</a></li>
+                <li className={`${isActive('3')}`} data-year="3"><i /></li>
+                <li className={`${isActive('3')}`} data-year="3"><i /></li>
+                <li className={`${isActive('3')}`} data-year="3"><i /></li>
+                <li className={`${isActive('3')}`} data-year="3"><i /></li>
+            </ul>
+        </nav>
+    )
+}
 
-const SlideGroup = ({year}) => {
+const SlideGroup = ({year, data, view }) => {
     const ref = useRef();
     const dispatch = useDispatch();
     const setYear = year => dispatch({type: ACTION_SET_YEAR, payload: year})
@@ -223,11 +403,17 @@ const SlideGroup = ({year}) => {
     const handlEnter = () => {
         setYear(year);
     }
+
+    const [tweens, setTweens] = useState();
+    
     useEffect(() => {
         const bgs = Array.from(ref.current.querySelectorAll('.bg:not(.end)'));
         const slides = Array.from(ref.current.querySelectorAll('.slide'));
-        // console.log(bgs, slides)
-      
+        const tweens = [];
+        console.log(view, bgs, slides)
+        
+        // ScrollTrigger.killAll();
+
         const tl = gsap.timeline({
             scrollTrigger:{
                 trigger: ref.current,
@@ -266,40 +452,83 @@ const SlideGroup = ({year}) => {
             //         scrub: true
             //     }
             // });
-            const panel = slide.querySelector('.content-panel');
-            const content = slide.querySelector('.content');
-            gsap.timeline({
+            // const panel = slide.querySelector('.content-panel');
+            // const content = slide.querySelector('.content');
+            
+            let tw = gsap.timeline({
                 scrollTrigger: {
                     trigger: slide,
                     start: 'top bottom',
                     end: 'top top',
-                    scrub: true
+                    // scrub: true,
+                    toggleActions: 'play none reverse none'
                 }
             })
             .from(bgs[i],{
+                // startAt: {alpha: 1},
+                duration: 0.4,
                 alpha: i? 0: 1,
-                scale: 1.2,
+                scaleY: 1.1,
                 ease: 'none',
-            })
+                // transformOriginY: '100%'
+            });
+
+            tweens.push(tw);
+
             // .from(panel, {scale: .8, rotateY: '45deg', y: '-=100', alpha: 0}, 0)
             // .from(content,{perspectiveOriginY: '100%'}, 0)
             
         });
+        tweens.push(tl);
+        setTweens(tweens);
         // refresh with depaly to allow for page to settle
         setTimeout(()=>{
             ScrollTrigger.refresh();
+            // ScrollTrigger.clearScrollMemory()
+            console.log('refresh')
         }, 1500);
 
-    },[]);
+        return () => {
+            // ScrollTrigger.killAll();
+            tweens.map((v)=>v.kill());
+            // slides.map((v)=> v.kill();
+        }
+    },[view]);
 
     return (
         <div ref={ref} className="slide-group">
+            {
+                data.images.map(v => 
+                    <div 
+                        className="bg" 
+                        style={{
+                            backgroundImage: `url(${assetsPath}/${view}/${v})`,
+                            opacity: 1
+                        }}
+                    />
+                )
+            }
+            {/* <div className="bg"></div>
             <div className="bg"></div>
             <div className="bg"></div>
-            <div className="bg"></div>
-            <div className="bg"></div>
-            <div className="bg end"></div>
-            <div className="slide">
+            <div className="bg"></div> */}
+            <div 
+                className="bg end" 
+                style={{
+                    backgroundImage: `url(${assetsPath}/${view}/${data.images[data.images.length -1]})`
+                }}                
+            />
+
+            {
+                data.images.map((v, i) => 
+                    <div className="slide" >
+                        <div className="content">
+                            {data.content[i] ? data.content[i]() : false }
+                        </div>
+                    </div>
+                )
+            }            
+            {/* <div className="slide">
                 <div className="content">
                     <div className="content-panel">
                             <div className="panel-body">
@@ -322,7 +551,7 @@ const SlideGroup = ({year}) => {
                 <div className="content">
                     <h1>item 4</h1>
                 </div>
-            </div>
+            </div> */}
         </div>        
     )
 }
@@ -345,6 +574,15 @@ const Main = () => {
 
     const store = useSelector(s=>s);    
 
+    const setView = (v) => {
+        // ScrollTrigger.killAll();
+        ScrollTrigger.getAll().map(s=>s.kill());
+        console.log(ScrollTrigger.getAll());
+        setTimeout(()=>{
+
+            dispatch({type:ACTION_SET_VIEW, payload: v});
+        }, 500);
+    }
    
     // if (!loaded) return <Loading />;
  
@@ -362,16 +600,34 @@ const Main = () => {
                 </div>
         </Container>
         
+        <div className="switch">
+            <div className="prompt-wrap">
+                <div className="prompt">Select Code Red or Code Green to view the possible scenarios</div>
+
+            </div>
+            <div className="nav">
+                <a href="#"
+                    className={`${store.UI.view=='red'? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('red')}}><IconRed /><span>Code Red</span></a>
+                <a href="#"
+                    className={`green ${store.UI.view=='green' ? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('green')}}><IconGreen /><span>Code Green</span></a>
+            </div>
+        </div>
+
         <ImagePanels />
 
-        <Container>
+        <BoxedContainer>
+            <a href="#"
+                className={`btn-code-red`}
+                onClick={(e)=>{e.preventDefault();}}><IconRedSmall /><span>Click here to view the Code Red scenario</span></a>
             <div {...setHtml(content.outro)}></div>
-        </Container>
+            <div className="padding-y"></div>
+            <div className="cta" {...setHtml(content.cta)} />
+        </BoxedContainer>
 
-        <Container>
+        <BoxedContainer>
             <Break />
             <Footer content={content} related={store.sheets.related} shareUrl={store.sheets.global[0].shareUrl} />
-        </Container>
+        </BoxedContainer>
         </Fragment>
     )
 
