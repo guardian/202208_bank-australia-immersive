@@ -408,6 +408,7 @@ const SlideGroup = ({year, data, view }) => {
     
     useEffect(() => {
         const bgs = Array.from(ref.current.querySelectorAll('.bg:not(.end)'));
+        const bgs2 = Array.from(ref.current.querySelectorAll('.bg:not(.end)'));
         const slides = Array.from(ref.current.querySelectorAll('.slide'));
         const tweens = [];
         console.log(view, bgs, slides)
@@ -460,21 +461,29 @@ const SlideGroup = ({year, data, view }) => {
                     trigger: slide,
                     start: 'top bottom',
                     end: 'top top',
-                    // scrub: true,
+                    scrub: true,
                     toggleActions: 'play none reverse none'
                 }
             })
             .from(bgs[i],{
                 // startAt: {alpha: 1},
                 duration: 0.4,
-                alpha: i? 0: 1,
-                scaleY: 1.1,
+                // alpha: i? 0: 1,
+                scaleY: 1.3,
                 ease: 'none',
                 // transformOriginY: '100%'
             });
 
             tweens.push(tw);
 
+            ScrollTrigger.create( {
+                trigger: slide,
+                start: 'top bottom',
+                end: 'top top',
+                scrub: true,
+                toggleActions: 'play none reverse none',
+                animation: gsap.from(bgs2[i], {scaleY: 1.3})
+            })
             // .from(panel, {scale: .8, rotateY: '45deg', y: '-=100', alpha: 0}, 0)
             // .from(content,{perspectiveOriginY: '100%'}, 0)
             
@@ -497,7 +506,7 @@ const SlideGroup = ({year, data, view }) => {
 
     return (
         <div ref={ref} className="slide-group">
-            {
+            {/* {
                 data.images.map(v => 
                     <div 
                         className="bg" 
@@ -507,21 +516,26 @@ const SlideGroup = ({year, data, view }) => {
                         }}
                     />
                 )
-            }
+            } */}
             {/* <div className="bg"></div>
             <div className="bg"></div>
             <div className="bg"></div>
             <div className="bg"></div> */}
-            <div 
+            {/* <div 
                 className="bg end" 
                 style={{
                     backgroundImage: `url(${assetsPath}/${view}/${data.images[data.images.length -1]})`
                 }}                
-            />
+            /> */}
 
             {
                 data.images.map((v, i) => 
                     <div className="slide" >
+                        <div className="bg2"
+                    style={{
+                        backgroundImage: `url(${assetsPath}/${view}/${v})`,
+                        opacity: 1
+                    }} />
                         <div className="content">
                             {data.content[i] ? data.content[i]() : false }
                         </div>
