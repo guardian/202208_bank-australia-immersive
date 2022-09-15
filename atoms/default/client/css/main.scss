@@ -7,14 +7,52 @@
 @import "mq";
 // @import "palette";
 // @import "base";
-@import "common";
-@import "app";
-@import "audioPlayer";
-@import "components/panels";
+
 
 // @import "enhancer";
 
 .interactive-atom {
     margin: 0;
     padding: 0;
+}
+
+:root {
+    --brand-primary: #CDE4FF;
+    --brand-secondary: #3942A3;
+    --brand-alt: #FFF06B;
+    --brand-alt-b: #D8E9E7;
+    --button-bg-blue: #2B317A;
+  
+    --brand-red: #EB5A43;
+    --brand-blue: #003764;
+    --brand-beige: #FFF3EB;
+    --brand-green: #2A8653;
+    --brand-black: #121212;
+    --brand-avo: #F0F8DD;
+    --switch-color: var(--brand-green);
+  }
+  
+#Glabs {
+    background-color: #FFF5E4;
+  
+    &, .content {
+      color: var(--brand-black);
+    }
+  
+    font-family: 'Guardian Egyptian Web';
+    line-height: 1.375;
+    // .content {
+    //   color: #182050;
+    // }
+
+    section {
+        padding: 2rem 0;
+      }    
+
+    @import "common";
+    @import "app";
+    @import "audioPlayer";
+    @import "components/panels";
+
+
 }

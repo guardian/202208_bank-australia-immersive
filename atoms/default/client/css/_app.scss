@@ -1,18 +1,3 @@
-:root {
-  --brand-primary: #CDE4FF;
-  --brand-secondary: #3942A3;
-  --brand-alt: #FFF06B;
-  --brand-alt-b: #D8E9E7;
-  --button-bg-blue: #2B317A;
-
-  --brand-red: #EB5A43;
-  --brand-blue: #003764;
-  --brand-beige: #FFF3EB;
-  --brand-green: #2A8653;
-  --brand-black: #121212;
-  --brand-avo: #F0F8DD;
-  --switch-color: var(--brand-green);
-}
 
 // body {
 //   background-color: #B9B9B9;
@@ -89,8 +74,9 @@ h1 {
 }
 
 h2 {
-  font-weight: 800;
-  
+  margin-top: 1rem;
+  font-weight: normal;
+  font-size: 22/16 + rem;
 }
 
 h3 {
@@ -135,19 +121,6 @@ p {
 }
 
 
-#Glabs {
-  background-color: #FFF5E4;
-  
-  &, .content {
-    color: var(--brand-black);
-  }
-
-  font-family: 'Guardian Egyptian Web';
-  line-height: 1.375;
-  // .content {
-  //   color: #182050;
-  // }
-}
 
 .scroll-icon {
   text-align: center;
@@ -161,9 +134,6 @@ p {
 // @import 'components/cardgrid';
 
 
-#Glabs section {
-  padding: 2rem 0;
-}
 
 .margin-auto {
   margin: auto;
@@ -198,6 +168,14 @@ section.footer {
     a {
       text-decoration: underline;
     }
+  }
+}
+
+.cta {
+  margin-top: 4rem;
+  p, a {
+    font-size: 18/16 + rem;
+    font-weight: bold;
   }
 }
 
@@ -352,8 +330,17 @@ section.footer {
     justify-items: center;
     align-items: center;
     justify-content: center;
+    transform: scale(0.7);
+    // filter: grayscale(0.6);
+    opacity: .7;
     i {
       margin-bottom: 15px;
+    }
+    &.active {
+      opacity: 1;
+      filter: grayscale(0);
+      pointer-events: none;
+      transform: scale(1);
     }
   }
   a.green {
@@ -397,7 +384,7 @@ section.footer {
 .btn-code-red {
   display: inline-block;
   align-items: center;
-  margin: auto;
+  margin: 1rem auto;
   background: var(--brand-red);
   border: 1px solid var(--brand-blue);
   border-radius: 100px;
@@ -408,6 +395,17 @@ section.footer {
     vertical-align: middle;
     transform: translateY(-3px);
     margin-right: 10px;
+  }
+}
+.view- {
+  .main-panel {
+    filter: grayscale(1);
+  }
+}
+
+.view-red {
+  .btn-code-red {
+    background-color: var(--brand-green);
   }
 }
 
@@ -435,7 +433,7 @@ section.footer {
   font-size: 13/16 + rem;
   font-weight: 600;
   color: var(--brand-blue);
-  margin: auto;
+  margin: 0 auto 1rem;
   @include mq(tablet) {
     width: 60%;
 

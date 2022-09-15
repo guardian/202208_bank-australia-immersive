@@ -6,7 +6,7 @@ const initialState = {
     sheets: null,
     content: {},
     UI: {
-        view: 'red',
+        view: 'green',
         year: null
     }
 };
@@ -50,7 +50,7 @@ const rootReducer = (state = initialState, action) => {
             // action.payload.questions.forEach(v => {
             //     content.questions[v.panel] = v;
             // })
-            
+            console.log(content);
             return {...state, sheets: action.payload, content: content };
             // return {...state, sheets: action.payload };
 

@@ -1,6 +1,8 @@
 .main-panel {
+    // filter: grayscale(0);
+    transition: all 0.5ms ease-in-out;
     nav {
-        position: absolute;
+        position: fixed;
         height: 100vh;
         top: 0;
         left: 0;
@@ -8,6 +10,8 @@
         align-items: center;
         z-index: 5;
         padding: 1rem;
+        transform: translate(-200px, 0);
+        transition: all .4s ease-in-out;
         li {
             margin: 1px auto;
             i {
@@ -27,6 +31,9 @@
                 text-align: center;
                 transition: all .4s ease-in-out;
             }
+            &.active:nth-of-type(2) {
+                margin-top: -1rem;
+            }
             &.active, &:hover {
                 i {
                     background-color: var(--switch-color);
@@ -43,10 +50,13 @@
         }
     }
     &.active {
+        filter: none;
         nav {
-            position: fixed;
+            transform: translate(0, 0);
+
         }
     }
+   
     .panel-wrap {
         position: relative;
         // height: 80vh;
@@ -108,7 +118,7 @@
             // width: 100%;
             position: relative;
             // background-color: rgba(81, 199, 77, 11);
-            border: 1px solid black;
+            // border: 1px solid black;
             min-height: 100vh;
             top: 0;
             left: 0;
@@ -122,6 +132,13 @@
                 transform-style: preserve-3d;
                 perspective: 1000px;
                 perspective-origin: 50% 30%;
+
+                h1 {
+                    font-weight: 500;
+                    color: white;
+                    max-width: 22rem;
+                    text-align: center;
+                }
 
                 @include mq(tablet) {
                     justify-content: center;
@@ -137,13 +154,16 @@
         max-width: 30rem;
         width: 60%;
         margin: 0 1rem;
-        background: var(--brand-avo);        
+        background: var(--brand-avo);    
         position: relative;
         filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
         .panel-body {
             padding: 2rem;
             p:first-child {
                 margin-top: 0;
+            }
+            a {
+                color: var(--switch-color);
             }
         }
         &::after {
@@ -153,7 +173,24 @@
             width: calc(100% - 4rem);
             margin: auto;
             margin-bottom: -5px;
-            background-color: var(--brand-green);
+            background-color: var(--switch-color);
         }
+    }
+}
+
+.view-red {
+    .content-panel {
+        background-color: #FFF3EB;
+    }
+}
+
+.is-first-true {
+    .main-panel {
+        filter: grayscale(1) blur(6px);
+    }
+
+    .switch .nav a {
+        transform: scale(1);
+        opacity: 1;
     }
 }

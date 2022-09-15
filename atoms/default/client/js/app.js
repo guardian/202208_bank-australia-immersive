@@ -2,14 +2,14 @@
 // just do e.g. import Scatter from "shared/js/scatter.js"
 // if you want to import a module from shared/js then you can
 // just do e.g. import Scatter from "shared/js/scatter.js"
-import { render, h, Fragment, createContext } from "preact";
+import { render, h, Fragment, createContext, createElement } from "preact";
 import SocialBar from 'shared/js/SocialShare';
 import {$, $$} from 'shared/js/util';
 import RelatedContent from "shared/js/RelatedContent";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import store, {fetchData, assetsPath, ACTION_SET_VIEW, ACTION_SET_YEAR } from "./store";
-import {IconGlobeTemp, IconGreen, IconRed, IconRedSmall, Logo} from "./Icons";
+import {IconGlobeTemp, IconGreen, IconGreenSmall, IconRed, IconRedSmall, Logo} from "./Icons";
 // import {GreenG1S1, GreenG1S3, GreenG2S2} from "./panels";
 import * as ContentPanels from "./panels";
 import {SwitchTransition, Transition, TransitionGroup} from "react-transition-group";
@@ -29,7 +29,7 @@ const slideData = {
                 group: '2022',
                 content: [
                     ContentPanels.GreenG1S1,
-                    null,
+                    ContentPanels.GreenG1S2,
                     ContentPanels.GreenG1S3,
                 ],
                 images: [
@@ -86,10 +86,10 @@ const slideData = {
             {
                 group: '1.1',
                 content: [
-                    ContentPanels.GreenG1S1,
-                    null,
-                    ContentPanels.GreenG1S3,
-                    ContentPanels.GreenG1S3,
+                    ContentPanels.RedG1S1,
+                    ContentPanels.RedG1S2,
+                    ContentPanels.RedG1S2,
+                    ContentPanels.RedG1S2,
                 ],
                 images: [
                     'one-1.jpg',
@@ -101,10 +101,10 @@ const slideData = {
             {
                 group: '1.5',
                 content: [
-                    ContentPanels.GreenG1S1,
-                    null,
-                    ContentPanels.GreenG1S3,
-                    ContentPanels.GreenG1S3,
+                    ContentPanels.RedG2S1,
+                    ContentPanels.RedG2S2,
+                    ContentPanels.RedG2S3,
+                    ContentPanels.RedG2S4,
                 ],
                 images: [
                     'two-1.jpg',
@@ -116,11 +116,11 @@ const slideData = {
             {
                 group: '2',
                 content: [
-                    ContentPanels.GreenG1S1,
-                    null,
-                    ContentPanels.GreenG1S3,
-                    ContentPanels.GreenG1S3,
-                    ContentPanels.GreenG1S3,
+                    ContentPanels.RedG3S1,
+                    ContentPanels.RedG3S2,
+                    ContentPanels.RedG3S3,
+                    ContentPanels.RedG3S4,
+                    ContentPanels.RedG3S5,
                 ],
                 images: [
                     'three-1.jpg',
@@ -133,11 +133,10 @@ const slideData = {
             {
                 group: '3',
                 content: [
-                    ContentPanels.GreenG1S1,
-                    null,
-                    ContentPanels.GreenG1S3,
-                    ContentPanels.GreenG1S3,
-                ],
+                    ContentPanels.RedG4S1,
+                    ContentPanels.RedG4S2,
+                    ContentPanels.RedG4S3,
+                    ContentPanels.RedG4S4,                ],
                 images: [
                     'four-1.jpg',
                     'four-2.jpg',
@@ -305,7 +304,19 @@ const ImagePanels = () => {
     const ref = useRef(ref);
     const view = useSelector(s=>s.UI.view);
 
+    const [isFirst, setIsFirst] = useState(true);
+    const [tl, setTl] = useState();
+
     useEffect(()=>{
+        // if (isFirst) {
+        //     setIsFirst(false)
+        //     if (view === 'green') {
+        //         ScrollTrigger.refresh();
+        //         return;
+        //     }
+        // }
+        // if (tl) tl.kill();
+        // ScrollTrigger.getAll().map(v=>v.kill());
         gsap.timeline({
             scrollTrigger: {
                 trigger: ref.current,
@@ -313,7 +324,12 @@ const ImagePanels = () => {
                 end: 'bottom bottom',
                 toggleClass: 'active',
             }
-        })
+        });
+        // setTimeout(()=>{
+        //     ScrollTrigger.refresh();
+        //     // ScrollTrigger.clearScrollMemory()
+        //     // console.log('refresh')
+        // }, 1500);        
     },[view]);
 
     return (
@@ -321,7 +337,7 @@ const ImagePanels = () => {
         <div className="panel-wrap">
             {
                 slideData[view || 'green'].slides.map((v,i)=>{
-                    return <SlideGroup year={v.group} key={i} data={v} view={view|| 'green'}/>
+                    return <SlideGroup year={v.group} key={i} data={v} view={view|| 'green'} index={i}/>
                 })
             }
 
@@ -398,7 +414,6 @@ const SlideNavRed = () => {
 const Slide = ({img, view, content}) => {
     const [ref, inView, entry] = useInView();
     const bgRef = useRef();
-
     useEffect(()=>{
 
         if (inView) {
@@ -408,7 +423,7 @@ const Slide = ({img, view, content}) => {
                 gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, backgroundPositionY: "100%"})
 
             }
-            console.log(entry);
+            // console.log(content);
         }
     },[inView])
     return (
@@ -428,7 +443,7 @@ const Slide = ({img, view, content}) => {
     )
 }
 
-const SlideGroup = ({year, data, view }) => {
+const SlideGroup = ({year, data, view, index }) => {
     const ref = useRef();
     const dispatch = useDispatch();
     const setYear = year => dispatch({type: ACTION_SET_YEAR, payload: year})
@@ -439,17 +454,26 @@ const SlideGroup = ({year, data, view }) => {
         setYear(year);
     }
 
+    const [isFirst, setIsFirst] = useState(true);
+
+    const store = useSelector(s=>s.content);
+
     const [tweens, setTweens] = useState();
     
     useEffect(() => {
-        const bgs = Array.from(ref.current.querySelectorAll('.bg:not(.end)'));
-        const bgs2 = Array.from(ref.current.querySelectorAll('.bg:not(.end)'));
-        const slides = Array.from(ref.current.querySelectorAll('.slide'));
-        const tweens = [];
-        console.log(view, bgs, slides)
+        // const bgs = Array.from(ref.current.querySelectorAll('.bg:not(.end)'));
+        // const bgs2 = Array.from(ref.current.querySelectorAll('.bg:not(.end)'));
+        // const slides = Array.from(ref.current.querySelectorAll('.slide'));
+        // const tweens = [];
+        // console.log(view, bgs, slides)
         
         // ScrollTrigger.killAll();
-
+        // if (isFirst) {
+        //     setIsFirst(false);
+        //     if (view==='green') {
+        //         return
+        //     }
+        // }
         const tl = gsap.timeline({
             scrollTrigger:{
                 trigger: ref.current,
@@ -529,12 +553,12 @@ const SlideGroup = ({year, data, view }) => {
         setTimeout(()=>{
             ScrollTrigger.refresh();
             // ScrollTrigger.clearScrollMemory()
-            console.log('refresh')
+            // console.log('refresh')
         }, 1500);
 
         return () => {
             // ScrollTrigger.killAll();
-            tweens.map((v)=>v.kill());
+            // tweens.map((v)=>v.kill());
             // slides.map((v)=> v.kill();
         }
     },[view]);
@@ -565,7 +589,7 @@ const SlideGroup = ({year, data, view }) => {
 
             {
                 data.images.map((v, i) => 
-                    <Slide view={view} img={v} content={data.content[i] ? data.content[i]() : false } />
+                    <Slide view={view} img={v} content={data.content[i] ? data.content[i]({content: store[`slide-${view}${index+1}${i+1}`]}) : false } />
                 )
             }            
             {/* <div className="slide">
@@ -608,7 +632,7 @@ const Main = () => {
     },[]);
 
 
-    
+    const [isFirst, setIsFirst] = useState(true);
 
     const content = useSelector(s=>s.content);
 
@@ -617,11 +641,14 @@ const Main = () => {
     const setView = (v) => {
         // ScrollTrigger.killAll();
         ScrollTrigger.getAll().map(s=>s.kill());
-        console.log(ScrollTrigger.getAll());
-        setTimeout(()=>{
+        // console.log(ScrollTrigger.getAll());
+        setIsFirst(false);
+        if (v != store.UI.view) {
+            setTimeout(()=>{
 
-            dispatch({type:ACTION_SET_VIEW, payload: v});
-        }, 500);
+                dispatch({type:ACTION_SET_VIEW, payload: v});
+            }, 500);
+        }
     }
    
     // if (!loaded) return <Loading />;
@@ -631,43 +658,63 @@ const Main = () => {
     const home = () => (
         <Fragment>
 
-        <Header  />
-        <Container>
-                <div className="intro-body">
-                <Standfirst content={content}></Standfirst>
-                <Attribution content={content}/>
-                <Intro content={content}></Intro>
+            <Header  />
+            <Container>
+                    <div className="intro-body">
+                    <Standfirst content={content}></Standfirst>
+                    <Attribution content={content}/>
+                    <Intro content={content}></Intro>
+                    </div>
+            </Container>
+            <div className={`view-${store.UI.view} is-first-${isFirst}`}
+                style={{
+                    '--switch-color': `var(--brand-${store.UI.view || 'green'})`
+                }}
+            >
+                <div className="switch">
+                    <div className="prompt-wrap">
+                        <div className="prompt">Select Code Red or Code Green to view the possible scenarios</div>
+
+                    </div>
+                    <div className="nav">
+                        <a href="#"
+                            className={`${store.UI.view=='red'? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('red')}}><IconRed /><span>Code Red</span></a>
+                        <a href="#"
+                            className={`green ${store.UI.view=='green' ? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('green')}}><IconGreen /><span>Code Green</span></a>
+                    </div>
                 </div>
-        </Container>
-        
-        <div className="switch">
-            <div className="prompt-wrap">
-                <div className="prompt">Select Code Red or Code Green to view the possible scenarios</div>
 
+                <ImagePanels />
+
+                <BoxedContainer>
+                    <div className="d-flex jcc">
+                        {store.UI.view === 'green' &&
+                            <a href="#"
+                                className={`btn-code-red`}
+                                onClick={(e)=>{e.preventDefault();setView('red')}}>
+                                    <IconRedSmall />
+                                    <span>Click here to view the Code Red scenario</span>
+                            </a>
+                        }
+                        {store.UI.view === 'red' &&
+                            <a href="#"
+                                className={`btn-code-red`}
+                                onClick={(e)=>{e.preventDefault();setView('green')}}>
+                                    <IconGreenSmall />
+                                    <span>Click here to view the Code Green scenario</span>
+                            </a>
+                        }
+                    </div>
+                    <div {...setHtml(content.outro)}></div>
+                    <div className="padding-y"></div>
+                    <div className="cta" {...setHtml(content.cta)} />
+                </BoxedContainer>
+
+                <BoxedContainer>
+                    <Break />
+                    <Footer content={content} related={store.sheets.related} shareUrl={store.sheets.global[0].shareUrl} />
+                </BoxedContainer>
             </div>
-            <div className="nav">
-                <a href="#"
-                    className={`${store.UI.view=='red'? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('red')}}><IconRed /><span>Code Red</span></a>
-                <a href="#"
-                    className={`green ${store.UI.view=='green' ? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('green')}}><IconGreen /><span>Code Green</span></a>
-            </div>
-        </div>
-
-        <ImagePanels />
-
-        <BoxedContainer>
-            <a href="#"
-                className={`btn-code-red`}
-                onClick={(e)=>{e.preventDefault();}}><IconRedSmall /><span>Click here to view the Code Red scenario</span></a>
-            <div {...setHtml(content.outro)}></div>
-            <div className="padding-y"></div>
-            <div className="cta" {...setHtml(content.cta)} />
-        </BoxedContainer>
-
-        <BoxedContainer>
-            <Break />
-            <Footer content={content} related={store.sheets.related} shareUrl={store.sheets.global[0].shareUrl} />
-        </BoxedContainer>
         </Fragment>
     )
 

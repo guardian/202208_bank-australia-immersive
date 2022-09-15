@@ -232,6 +232,32 @@ export const IconGreen = () => {
 </i>
 	)
 }
+export const IconGreenSmall = () => {
+	return (
+		<i>
+
+<svg width="21" height="26" viewBox="0 0 21 26" fill="none">
+<g >
+<path d="M19.3195 14.7891H20.6731" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+<path d="M19.3195 12.4434H20.6731" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+<path d="M19.3195 10.0664H20.6731" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+<path d="M19.3195 7.72266H20.6731" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+<path d="M16.1171 18.4189V15.1172" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" stroke-linecap="round" strokeLinejoin="round"/>
+<path d="M14.268 17.3291C14.268 16.5697 14.268 6.82978 14.268 6.82978C14.268 5.83928 15.0604 5.04688 16.0509 5.04688H16.2159C17.2064 5.04688 17.9988 5.83928 17.9988 6.82978C17.9988 6.82978 17.9988 16.8008 17.9988 17.3291C18.362 17.7583 18.5931 18.3196 18.5931 18.9469C18.5931 20.3006 17.5036 21.3901 16.1499 21.3901C14.7962 21.3901 13.7067 20.3006 13.7067 18.9469C13.6737 18.3196 13.8718 17.7583 14.268 17.3291Z" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+<path d="M16.6121 18.8468C16.6121 19.1109 16.381 19.3421 16.1168 19.3421C15.8527 19.3421 15.6216 19.1109 15.6216 18.8468C15.6216 18.5827 15.8527 18.3516 16.1168 18.3516C16.381 18.3516 16.6121 18.5827 16.6121 18.8468Z" fill="white" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10"/>
+<path d="M7.96191 21.3254V7.35938" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+<path d="M7.4336 7.29297C7.4336 7.29297 0.830257 13.335 7.4336 21.3251" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+<path d="M8.52307 7.29297C8.52307 7.29297 15.1264 13.335 8.52307 21.3251" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+<path d="M12.32 19.8389C11.1314 20.7964 9.61265 21.3577 7.96181 21.3577C4.06584 21.3577 0.89624 18.1881 0.89624 14.2921C0.89624 10.3962 4.06584 7.22656 7.96181 7.22656C9.74472 7.22656 11.3956 7.8869 12.6172 8.97645" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+<path d="M12.9141 14.3223H2.28271" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+<path d="M12.9142 10.8242H3.57043" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+<path d="M12.4518 17.8223H3.63635" stroke="white" strokeWidth="0.825418" strokeMiterlimit="10" strokeLinejoin="round"/>
+</g>
+
+</svg> 	
+</i>
+	)
+}
 export const IconGlobeTemp = () => {
 	return (
 		<i>
