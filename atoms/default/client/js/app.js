@@ -16,6 +16,8 @@ import {SwitchTransition, Transition, TransitionGroup} from "react-transition-gr
 import {Provider, useSelector, useDispatch} from "react-redux";
 import { useEffect, useRef, useState } from "preact/hooks";
 import CardGrid from "./CardGrid";
+// import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 // import {motion, AnimatePresence} from 'framer-motion';
 
 let dispatch;
@@ -393,6 +395,39 @@ const SlideNavRed = () => {
     )
 }
 
+const Slide = ({img, view, content}) => {
+    const [ref, inView, entry] = useInView();
+    const bgRef = useRef();
+
+    useEffect(()=>{
+
+        if (inView) {
+            if (entry.boundingClientRect.top > 0) {
+                gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, backgroundPositionY: "0%"})
+            } else {
+                gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, backgroundPositionY: "100%"})
+
+            }
+            console.log(entry);
+        }
+    },[inView])
+    return (
+        <div className="slide" ref={ref}>
+            <div className="bg2"
+                ref={bgRef}
+
+                style={{
+                    backgroundImage: `url(${assetsPath}/${view}/${img})`,
+                    opacity: 1
+                }} />
+
+            <div className="content">
+                {content}
+            </div>
+        </div>
+    )
+}
+
 const SlideGroup = ({year, data, view }) => {
     const ref = useRef();
     const dispatch = useDispatch();
@@ -418,8 +453,8 @@ const SlideGroup = ({year, data, view }) => {
         const tl = gsap.timeline({
             scrollTrigger:{
                 trigger: ref.current,
-                start: 'top top',
-                end: 'bottom bottom',
+                start: 'top 50%',
+                end: 'bottom 50%',
                 scrub: true,
                 // pin: true,
                 // pinType: 'fixed',
@@ -440,56 +475,56 @@ const SlideGroup = ({year, data, view }) => {
         //         duration: 1
         //     }, i);
         // });
-        slides.map((slide,i)=>{
+        // slides.map((slide,i)=>{
            
-            // gsap.from(bgs[i],{
-            //     alpha: i? 0: 1,
-            //     scale: 1.2,
-            //     ease: 'none',
-            //     scrollTrigger: {
-            //         trigger: slide,
-            //         start: 'top bottom',
-            //         end: 'top top',
-            //         scrub: true
-            //     }
-            // });
-            // const panel = slide.querySelector('.content-panel');
-            // const content = slide.querySelector('.content');
+        //     // gsap.from(bgs[i],{
+        //     //     alpha: i? 0: 1,
+        //     //     scale: 1.2,
+        //     //     ease: 'none',
+        //     //     scrollTrigger: {
+        //     //         trigger: slide,
+        //     //         start: 'top bottom',
+        //     //         end: 'top top',
+        //     //         scrub: true
+        //     //     }
+        //     // });
+        //     // const panel = slide.querySelector('.content-panel');
+        //     // const content = slide.querySelector('.content');
             
-            let tw = gsap.timeline({
-                scrollTrigger: {
-                    trigger: slide,
-                    start: 'top bottom',
-                    end: 'top top',
-                    scrub: true,
-                    toggleActions: 'play none reverse none'
-                }
-            })
-            .from(bgs[i],{
-                // startAt: {alpha: 1},
-                duration: 0.4,
-                // alpha: i? 0: 1,
-                scaleY: 1.3,
-                ease: 'none',
-                // transformOriginY: '100%'
-            });
+        //     let tw = gsap.timeline({
+        //         scrollTrigger: {
+        //             trigger: slide,
+        //             start: 'top bottom',
+        //             end: 'top top',
+        //             scrub: true,
+        //             toggleActions: 'play none reverse none'
+        //         }
+        //     })
+        //     .from(bgs[i],{
+        //         // startAt: {alpha: 1},
+        //         duration: 0.4,
+        //         // alpha: i? 0: 1,
+        //         scaleY: 1.3,
+        //         ease: 'none',
+        //         // transformOriginY: '100%'
+        //     });
 
-            tweens.push(tw);
+        //     tweens.push(tw);
 
-            ScrollTrigger.create( {
-                trigger: slide,
-                start: 'top bottom',
-                end: 'top top',
-                scrub: true,
-                toggleActions: 'play none reverse none',
-                animation: gsap.from(bgs2[i], {scaleY: 1.3})
-            })
-            // .from(panel, {scale: .8, rotateY: '45deg', y: '-=100', alpha: 0}, 0)
-            // .from(content,{perspectiveOriginY: '100%'}, 0)
+        //     ScrollTrigger.create( {
+        //         trigger: slide,
+        //         start: 'top bottom',
+        //         end: 'top top',
+        //         scrub: true,
+        //         toggleActions: 'play none reverse none',
+        //         animation: gsap.from(bgs2[i], {scaleY: 1.3})
+        //     })
+        //     // .from(panel, {scale: .8, rotateY: '45deg', y: '-=100', alpha: 0}, 0)
+        //     // .from(content,{perspectiveOriginY: '100%'}, 0)
             
-        });
-        tweens.push(tl);
-        setTweens(tweens);
+        // });
+        // tweens.push(tl);
+        // setTweens(tweens);
         // refresh with depaly to allow for page to settle
         setTimeout(()=>{
             ScrollTrigger.refresh();
@@ -530,16 +565,7 @@ const SlideGroup = ({year, data, view }) => {
 
             {
                 data.images.map((v, i) => 
-                    <div className="slide" >
-                        <div className="bg2"
-                    style={{
-                        backgroundImage: `url(${assetsPath}/${view}/${v})`,
-                        opacity: 1
-                    }} />
-                        <div className="content">
-                            {data.content[i] ? data.content[i]() : false }
-                        </div>
-                    </div>
+                    <Slide view={view} img={v} content={data.content[i] ? data.content[i]() : false } />
                 )
             }            
             {/* <div className="slide">

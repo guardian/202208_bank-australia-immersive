@@ -7,9 +7,9 @@
         display: flex;
         align-items: center;
         z-index: 5;
-        padding: 2rem;
+        padding: 1rem;
         li {
-            margin: 10px auto;
+            margin: 1px auto;
             i {
                 display: block;
                 background-color: white;
@@ -21,7 +21,7 @@
             a {
                 display: block;
                 background-color: white;
-                padding: 2rem;
+                padding: 20px;
                 color: var(--brand-black);
                 clip-path: circle(40%);
                 text-align: center;
@@ -60,7 +60,7 @@
         }
 
         .slide {
-            height: 100vh;
+            height: 120vh;
             z-index: 2;
             
             transform-origin: 50% 0%;
@@ -70,18 +70,19 @@
             .bg2 {
                 position: absolute;
                 width: 100%;
-                height: 100vh;
+                height: 100%;
                 left: 0;
                 transform-origin: 50% 0%;
                 background: no-repeat 50%/cover;
                 background-attachment: fixed;
+                
             }
 
         }
-        .bg {
+        .bg,.bgw {
             position: absolute;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             left: 0;
             transform-origin: 50% 0%;
             background: no-repeat 50%/cover;
