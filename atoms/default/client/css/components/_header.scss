@@ -22,6 +22,7 @@
         @include mq(tablet) {
             // height: 540px;
             height: 93vh;
+            min-height: 820px;
         }
       // position: absolute;
       // max-height: 545px;

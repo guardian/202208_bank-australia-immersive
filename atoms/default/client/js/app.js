@@ -9,7 +9,7 @@ import RelatedContent from "shared/js/RelatedContent";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import store, {fetchData, assetsPath, ACTION_SET_VIEW, ACTION_SET_YEAR } from "./store";
-import {IconGlobeTemp, IconGreen, IconGreenSmall, IconRed, IconRedSmall, Logo} from "./Icons";
+import {IconGlobeTemp, IconGreen, IconGreenSmall, IconRed, IconRedSmall, IconSelect, Logo} from "./Icons";
 // import {GreenG1S1, GreenG1S3, GreenG2S2} from "./panels";
 import * as ContentPanels from "./panels";
 import {SwitchTransition, Transition, TransitionGroup} from "react-transition-group";
@@ -231,7 +231,7 @@ const Header = () => {
             <div className="bg" style={{
             backgroundImage: `url(${assetsPath}/hero.jpg)`
         }}>
-            <div className="flex">
+            <div className="flex ctw">
                 <div className="client-tab margin-auto" {...setHtml(content.title)}></div>
             </div>
             <Container className="title-block">
@@ -308,19 +308,21 @@ const ImagePanels = () => {
     const [tl, setTl] = useState();
 
     useEffect(()=>{
-        // if (isFirst) {
-        //     setIsFirst(false)
-        //     if (view === 'green') {
-        //         ScrollTrigger.refresh();
-        //         return;
-        //     }
-        // }
+        if (isFirst) {
+            setIsFirst(false)
+            // if (view === 'green') {
+            //     ScrollTrigger.refresh();
+            //     return;
+            // }
+        } else {
+            // ref.current.scrollIntoView({behavior:'smooth', inline: 'start'});
+        }
         // if (tl) tl.kill();
         // ScrollTrigger.getAll().map(v=>v.kill());
         gsap.timeline({
             scrollTrigger: {
                 trigger: ref.current,
-                start: 'top top',
+                start: 'top 10%',
                 end: 'bottom bottom',
                 toggleClass: 'active',
             }
@@ -329,15 +331,23 @@ const ImagePanels = () => {
         //     ScrollTrigger.refresh();
         //     // ScrollTrigger.clearScrollMemory()
         //     // console.log('refresh')
-        // }, 1500);        
+        // }, 1500);
+        
+        gsap.to(ref.current, {duration: 0.6, alpha: 1});
     },[view]);
 
     return (
     <div ref={ref} className="main-panel">
         <div className="panel-wrap">
             {
-                slideData[view || 'green'].slides.map((v,i)=>{
-                    return <SlideGroup year={v.group} key={i} data={v} view={view|| 'green'} index={i}/>
+                view && slideData[view || 'green'].slides.map((v,i)=>{
+                    return <SlideGroup 
+                        year={v.group} 
+                        key={i} 
+                        data={v} 
+                        view={view|| 'green'} 
+                        index={i}
+                    />
                 })
             }
 
@@ -355,22 +365,34 @@ const ImagePanels = () => {
 const SlideNavGreen = () => {
     const year = useSelector(s=>s.UI.year);
     const isActive = yr => yr === year ? 'active': '';
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        // console.log(e.target.dataset.group);
+        const t = document.querySelector(`.main-panel .group-${e.target.dataset.group}`);
+        // console.log(t.offsetTop, window.scrollY);
+        // window.scrollTo({
+        //     top: t.offsetTop,
+        //     behavior: 'smooth'
+        // });
+        t.scrollIntoView({behavior: 'smooth'});
+    }
     return (
         <nav>
             <ul>
-                <li className={`${isActive('2022')}`} data-year="2022"><a href="#">2022</a></li>
+                <li className={`${isActive('2022')}`} data-year="2022"><a href="#" data-group="1" onClick={handleClick}>2022</a></li>
                 <li className={`${isActive('2022')}`} data-year="2022"><i /></li>
                 <li className={`${isActive('2022')}`} data-year="2022"><i /></li>
                 <li className={`${isActive('2022')}`} data-year="2022"><i /></li>
-                <li className={`${isActive('2030')}`} data-year="2030"><a href="#">2030</a></li>
+                <li className={`${isActive('2030')}`} data-year="2030"><a href="#" data-group="2" onClick={handleClick}>2030</a></li>
                 <li className={`${isActive('2030')}`} data-year="2030"><i /></li>
                 <li className={`${isActive('2030')}`} data-year="2030"><i /></li>
                 <li className={`${isActive('2030')}`} data-year="2030"><i /></li>
-                <li className={`${isActive('2040')}`} data-year="2040"><a href="#">2040</a></li>
+                <li className={`${isActive('2040')}`} data-year="2040"><a href="#" data-group="3" onClick={handleClick}>2040</a></li>
                 <li className={`${isActive('2040')}`} data-year="2040"><i /></li>
                 <li className={`${isActive('2040')}`} data-year="2040"><i /></li>
                 <li className={`${isActive('2040')}`} data-year="2040"><i /></li>
-                <li className={`${isActive('2050')}`} data-year="2050"><a href="#">2050</a></li>
+                <li className={`${isActive('2050')}`} data-year="2050"><a href="#" data-group="4" onClick={handleClick}>2050</a></li>
                 <li className={`${isActive('2050')}`} data-year="2050"><i /></li>
                 <li className={`${isActive('2050')}`} data-year="2050"><i /></li>
                 <li className={`${isActive('2050')}`} data-year="2050"><i /></li>
@@ -382,26 +404,30 @@ const SlideNavGreen = () => {
 const SlideNavRed = () => {
     const year = useSelector(s=>s.UI.year);
     const isActive = yr => yr === year ? 'active': '';
+    const handleClick = (e) => {
+        e.preventDefault();
+        console.log(e.target.data)
+    }
     return (
         <nav>
             <ul>
-                <li className={`${isActive('1.1')}`} data-year="1.1"><a href="#">1.1</a></li>
+                <li className={`${isActive('1.1')}`} data-year="1.1"><a href="#" data-group="1" onClick={handleClick}>1.1</a></li>
                 <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
                 <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
                 <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
                 <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
-                <li className={`${isActive('1.5')}`} data-year="1.5"><a href="#">1.5</a></li>
+                <li className={`${isActive('1.5')}`} data-year="1.5"><a href="#" data-group="2" onClick={handleClick}>1.5</a></li>
                 <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
                 <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
                 <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
                 <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
-                <li className={`${isActive('2')}`} data-year="2"><a href="#">2</a></li>
+                <li className={`${isActive('2')}`} data-year="2"><a href="#" data-group="3" onClick={handleClick}>2</a></li>
                 <li className={`${isActive('2')}`} data-year="2"><i /></li>
                 <li className={`${isActive('2')}`} data-year="2"><i /></li>
                 <li className={`${isActive('2')}`} data-year="2"><i /></li>
                 <li className={`${isActive('2')}`} data-year="2"><i /></li>
                 <li className={`${isActive('2')}`} data-year="2"><i /></li>
-                <li className={`${isActive('3')}`} data-year="3"><a href="#">3</a></li>
+                <li className={`${isActive('3')}`} data-year="3"><a href="#" data-group="4" onClick={handleClick}>3</a></li>
                 <li className={`${isActive('3')}`} data-year="3"><i /></li>
                 <li className={`${isActive('3')}`} data-year="3"><i /></li>
                 <li className={`${isActive('3')}`} data-year="3"><i /></li>
@@ -564,7 +590,7 @@ const SlideGroup = ({year, data, view, index }) => {
     },[view]);
 
     return (
-        <div ref={ref} className="slide-group">
+        <div ref={ref} className={`slide-group group-${index+1}`}>
             {/* {
                 data.images.map(v => 
                     <div 
@@ -640,13 +666,16 @@ const Main = () => {
 
     const setView = (v) => {
         // ScrollTrigger.killAll();
-        ScrollTrigger.getAll().map(s=>s.kill());
         // console.log(ScrollTrigger.getAll());
         setIsFirst(false);
+        document.querySelector('.main-panel').scrollIntoView({behavior:'smooth', inline: 'start'});
         if (v != store.UI.view) {
+            ScrollTrigger.getAll().map(s=>s.kill());
+            gsap.to('.main-panel', {duration: 0.6, alpha: 0});
             setTimeout(()=>{
 
                 dispatch({type:ACTION_SET_VIEW, payload: v});
+
             }, 500);
         }
     }
@@ -671,20 +700,28 @@ const Main = () => {
                     '--switch-color': `var(--brand-${store.UI.view || 'green'})`
                 }}
             >
-                <div className="switch">
-                    <div className="prompt-wrap">
-                        <div className="prompt">Select Code Red or Code Green to view the possible scenarios</div>
+                <div className="switch-container">
+                    <div className="switch">
+                        <div className="prompt-wrap">
+                            <div className="prompt">
+                                <IconSelect />
+                                <p>Select Code Red or Code Green to view the possible scenarios</p>
+                            </div>
 
+                        </div>
+                        <div className="nav">
+                            <a href="#"
+                                className={`${store.UI.view=='red'? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('red')}}><IconRed /><span>Code Red</span></a>
+                            <a href="#"
+                                className={`green ${store.UI.view=='green' ? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('green')}}><IconGreen /><span>Code Green</span></a>
+                        </div>
                     </div>
-                    <div className="nav">
-                        <a href="#"
-                            className={`${store.UI.view=='red'? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('red')}}><IconRed /><span>Code Red</span></a>
-                        <a href="#"
-                            className={`green ${store.UI.view=='green' ? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('green')}}><IconGreen /><span>Code Green</span></a>
-                    </div>
+
                 </div>
 
+                
                 <ImagePanels />
+                
 
                 <BoxedContainer>
                     <div className="d-flex jcc">
