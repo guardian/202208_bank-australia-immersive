@@ -40,6 +40,7 @@
     "preact": "^10.10.1",
     "preact-social": "^1.0.6",
     "react-dom": "^18.2.0",
+    "react-ga-gtm": "^2.5.3-beta",
     "react-intersection-observer": "^9.4.0",
     "react-redux": "^7.2.3",
     "react-smooth-scrolling": "^1.0.2",

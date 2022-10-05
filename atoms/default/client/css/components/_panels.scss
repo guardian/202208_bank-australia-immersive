@@ -12,6 +12,13 @@
         padding: 1rem;
         transform: translate(-200px, 0);
         transition: all .4s ease-in-out;
+        ul {
+            transform: scale(0.7);
+
+            @include mq(tablet) {
+                transform: scale(1);
+            }
+        }
         li {
             margin: 1px auto;
             i {
@@ -47,6 +54,7 @@
                     }
                 }
             }
+
         }
     }
     &.active {
@@ -69,10 +77,20 @@
 
         }
 
+        .group-top {
+            position: absolute;
+            top: 10vh;
+        }
+
         .slide {
             height: 120vh;
             z-index: 2;
-            
+
+            position: relative;
+            // min-height: 100vh;
+            top: 0;
+            left: 0;
+            width: 100%;            
             transform-origin: 50% 0%;
             background: no-repeat 50%/cover;
             background-attachment: fixed;
@@ -88,7 +106,30 @@
                 
             }
 
+            .content {
+                // position: absolute;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transform-style: preserve-3d;
+                perspective: 1000px;
+                perspective-origin: 50% 30%;
+                margin-left: 24vw;
+                h1 {
+                    font-weight: 500;
+                    color: white;
+                    max-width: 22rem;
+                    text-align: center;
+                }
+
+                @include mq(tablet) {
+                    margin-left: auto;
+                    justify-content: center;
+                }
+            }
         }
+
         .bg,.bgw {
             position: absolute;
             width: 100%;
@@ -114,51 +155,20 @@
 
 
         }
-        .slide {
-            // width: 100%;
-            position: relative;
-            // background-color: rgba(81, 199, 77, 11);
-            // border: 1px solid black;
-            min-height: 100vh;
-            top: 0;
-            left: 0;
-            width: 100%;
-            .content {
-                // position: absolute;
-                height: 100%;
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-                transform-style: preserve-3d;
-                perspective: 1000px;
-                perspective-origin: 50% 30%;
-
-                h1 {
-                    font-weight: 500;
-                    color: white;
-                    max-width: 22rem;
-                    text-align: center;
-                }
-
-                @include mq(tablet) {
-                    justify-content: center;
-                }
-            }
-        }
-
 
 
     }
 
     .content-panel {
         max-width: 30rem;
-        width: 60%;
+        // width: 60%;
         margin: 0 1rem;
         background: var(--brand-avo);    
         position: relative;
         filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
         .panel-body {
             padding: 2rem;
+
             p:first-child {
                 margin-top: 0;
             }

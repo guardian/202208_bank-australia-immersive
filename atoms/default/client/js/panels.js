@@ -17,7 +17,10 @@ export const GreenG1S3 = ({content}) => {
 }
 export const GreenG1S1 = ({content}) => {
     return (
-        <h1>2022</h1>
+        <div className="panel-body">
+            <h1>2022</h1>
+        </div>
+
     )    
 
 }
@@ -36,7 +39,10 @@ export const GreenG1S2 = ({content}) => {
 
 export const GreenG2S1 = ({content}) => {
     return (
-        <h1>2030</h1>
+        <div className="panel-body">
+            <h1>2030</h1>
+        </div>
+
     )
 }
 
@@ -56,7 +62,10 @@ export const GreenG2S2 = ({content}) => {
 
 export const GreenG3S1 = ({content}) => {
     return (
-        <h1>2040</h1>
+        <div className="panel-body">
+            <h1>2040</h1>
+        </div>
+
     )
 }
 
@@ -88,7 +97,9 @@ export const GreenG3S3 = ({content}) => {
 
 export const GreenG4S1 = ({content}) => {
     return (
-        <h1>2050</h1>
+        <div className="panel-body">
+            <h1>2050</h1>
+        </div>
     )
 }
 
@@ -141,7 +152,10 @@ export const GreenG4S4 = ({content}) => {
 
 export const RedG1S1 = ({content}) => {
     return (
-        <div {...setHtml(content)}></div>
+        <div className="panel-body">
+            <div {...setHtml(content)}></div>
+        </div>
+
     )
 }
 
@@ -189,7 +203,10 @@ export const RedG1S4 = ({content}) => {
 }
 export const RedG2S1 = ({content}) => {
     return (
-        <div {...setHtml(content)}></div>
+        <div className="panel-body">
+            <div {...setHtml(content)}></div>
+        </div>
+
     )
 }
 
@@ -229,7 +246,10 @@ export const RedG2S4 = ({content}) => {
 }
 export const RedG3S1 = ({content}) => {
     return (
-        <div {...setHtml(content)}></div>
+        <div className="panel-body">
+            <div {...setHtml(content)}></div>
+        </div>
+
     )
 }
 
@@ -282,7 +302,10 @@ export const RedG3S5 = ({content}) => {
 }
 export const RedG4S1 = ({content}) => {
     return (
-        <div {...setHtml(content)}></div>
+        <div className="panel-body">
+            <div {...setHtml(content)}></div>
+        </div>
+
     )
 }
 

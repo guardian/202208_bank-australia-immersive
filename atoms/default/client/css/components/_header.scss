@@ -17,8 +17,15 @@
       left: 0;
       mix-blend-mode: screen;
     }
+    .icon {
+      width: 180px;
+      margin: auto;
+      @include mq(tablet) {
+        width: 280px;
+      }
+    }
     .bg {
-        height: 80vh;
+        height: 90vh;
         @include mq(tablet) {
             // height: 540px;
             height: 93vh;

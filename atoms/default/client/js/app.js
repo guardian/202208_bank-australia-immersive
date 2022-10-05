@@ -18,6 +18,7 @@ import { useEffect, useRef, useState } from "preact/hooks";
 import CardGrid from "./CardGrid";
 // import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import GA, { initGA } from "./tracking";
 // import {motion, AnimatePresence} from 'framer-motion';
 
 let dispatch;
@@ -310,15 +311,8 @@ const ImagePanels = () => {
     useEffect(()=>{
         if (isFirst) {
             setIsFirst(false)
-            // if (view === 'green') {
-            //     ScrollTrigger.refresh();
-            //     return;
-            // }
-        } else {
-            // ref.current.scrollIntoView({behavior:'smooth', inline: 'start'});
         }
-        // if (tl) tl.kill();
-        // ScrollTrigger.getAll().map(v=>v.kill());
+
         gsap.timeline({
             scrollTrigger: {
                 trigger: ref.current,
@@ -327,11 +321,6 @@ const ImagePanels = () => {
                 toggleClass: 'active',
             }
         });
-        // setTimeout(()=>{
-        //     ScrollTrigger.refresh();
-        //     // ScrollTrigger.clearScrollMemory()
-        //     // console.log('refresh')
-        // }, 1500);
         
         gsap.to(ref.current, {duration: 0.6, alpha: 1});
     },[view]);
@@ -368,13 +357,7 @@ const SlideNavGreen = () => {
 
     const handleClick = (e) => {
         e.preventDefault();
-        // console.log(e.target.dataset.group);
         const t = document.querySelector(`.main-panel .group-${e.target.dataset.group}`);
-        // console.log(t.offsetTop, window.scrollY);
-        // window.scrollTo({
-        //     top: t.offsetTop,
-        //     behavior: 'smooth'
-        // });
         t.scrollIntoView({behavior: 'smooth'});
     }
     return (
@@ -406,7 +389,9 @@ const SlideNavRed = () => {
     const isActive = yr => yr === year ? 'active': '';
     const handleClick = (e) => {
         e.preventDefault();
-        console.log(e.target.data)
+        console.log(e.target.dataset)
+        document.querySelector(`.slide-group.group-${e.target.dataset.group} .group-top`)
+            .scrollIntoView({behavior: 'smooth'});
     }
     return (
         <nav>
@@ -487,19 +472,7 @@ const SlideGroup = ({year, data, view, index }) => {
     const [tweens, setTweens] = useState();
     
     useEffect(() => {
-        // const bgs = Array.from(ref.current.querySelectorAll('.bg:not(.end)'));
-        // const bgs2 = Array.from(ref.current.querySelectorAll('.bg:not(.end)'));
-        // const slides = Array.from(ref.current.querySelectorAll('.slide'));
-        // const tweens = [];
-        // console.log(view, bgs, slides)
-        
-        // ScrollTrigger.killAll();
-        // if (isFirst) {
-        //     setIsFirst(false);
-        //     if (view==='green') {
-        //         return
-        //     }
-        // }
+
         const tl = gsap.timeline({
             scrollTrigger:{
                 trigger: ref.current,
@@ -516,132 +489,22 @@ const SlideGroup = ({year, data, view, index }) => {
                 onEnterBack: handlEnter,
                 }
         })
-        // bgs.map((bg,i)=>{
-        //     console.log(bg)
-            
-        //     tl.from(bg,{
-        //         alpha: i? 0: 1,
-        //         // alpha: 0,
-        //         duration: 1
-        //     }, i);
-        // });
-        // slides.map((slide,i)=>{
-           
-        //     // gsap.from(bgs[i],{
-        //     //     alpha: i? 0: 1,
-        //     //     scale: 1.2,
-        //     //     ease: 'none',
-        //     //     scrollTrigger: {
-        //     //         trigger: slide,
-        //     //         start: 'top bottom',
-        //     //         end: 'top top',
-        //     //         scrub: true
-        //     //     }
-        //     // });
-        //     // const panel = slide.querySelector('.content-panel');
-        //     // const content = slide.querySelector('.content');
-            
-        //     let tw = gsap.timeline({
-        //         scrollTrigger: {
-        //             trigger: slide,
-        //             start: 'top bottom',
-        //             end: 'top top',
-        //             scrub: true,
-        //             toggleActions: 'play none reverse none'
-        //         }
-        //     })
-        //     .from(bgs[i],{
-        //         // startAt: {alpha: 1},
-        //         duration: 0.4,
-        //         // alpha: i? 0: 1,
-        //         scaleY: 1.3,
-        //         ease: 'none',
-        //         // transformOriginY: '100%'
-        //     });
-
-        //     tweens.push(tw);
-
-        //     ScrollTrigger.create( {
-        //         trigger: slide,
-        //         start: 'top bottom',
-        //         end: 'top top',
-        //         scrub: true,
-        //         toggleActions: 'play none reverse none',
-        //         animation: gsap.from(bgs2[i], {scaleY: 1.3})
-        //     })
-        //     // .from(panel, {scale: .8, rotateY: '45deg', y: '-=100', alpha: 0}, 0)
-        //     // .from(content,{perspectiveOriginY: '100%'}, 0)
-            
-        // });
-        // tweens.push(tl);
-        // setTweens(tweens);
         // refresh with depaly to allow for page to settle
         setTimeout(()=>{
             ScrollTrigger.refresh();
-            // ScrollTrigger.clearScrollMemory()
-            // console.log('refresh')
         }, 1500);
 
-        return () => {
-            // ScrollTrigger.killAll();
-            // tweens.map((v)=>v.kill());
-            // slides.map((v)=> v.kill();
-        }
+
     },[view]);
 
     return (
         <div ref={ref} className={`slide-group group-${index+1}`}>
-            {/* {
-                data.images.map(v => 
-                    <div 
-                        className="bg" 
-                        style={{
-                            backgroundImage: `url(${assetsPath}/${view}/${v})`,
-                            opacity: 1
-                        }}
-                    />
-                )
-            } */}
-            {/* <div className="bg"></div>
-            <div className="bg"></div>
-            <div className="bg"></div>
-            <div className="bg"></div> */}
-            {/* <div 
-                className="bg end" 
-                style={{
-                    backgroundImage: `url(${assetsPath}/${view}/${data.images[data.images.length -1]})`
-                }}                
-            /> */}
-
+            <div className="group-top"></div>
             {
                 data.images.map((v, i) => 
                     <Slide view={view} img={v} content={data.content[i] ? data.content[i]({content: store[`slide-${view}${index+1}${i+1}`]}) : false } />
                 )
             }            
-            {/* <div className="slide">
-                <div className="content">
-                    <div className="content-panel">
-                            <div className="panel-body">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias repellendus aut amet eius nesciunt labore modi voluptatem enim quibusdam doloribus, maiores magnam dolore totam asperiores? Voluptatem nostrum velit ducimus quo.</p>
-                            </div>
-                    </div>
-                </div>
-            </div>
-            <div className="slide">
-                <div className="content">
-                    <h1>item 2</h1>
-                </div>
-            </div>
-            <div className="slide">
-                <div className="content">
-                    <h1>item 3</h1>
-                </div>
-            </div>
-            <div className="slide">
-                <div className="content">
-                    <h1>item 4</h1>
-                </div>
-            </div> */}
         </div>        
     )
 }
@@ -665,8 +528,8 @@ const Main = () => {
     const store = useSelector(s=>s);    
 
     const setView = (v) => {
-        // ScrollTrigger.killAll();
-        // console.log(ScrollTrigger.getAll());
+        if (isFirst) GA(v);
+
         setIsFirst(false);
         document.querySelector('.main-panel').scrollIntoView({behavior:'smooth', inline: 'start'});
         if (v != store.UI.view) {
@@ -680,9 +543,10 @@ const Main = () => {
         }
     }
    
-    // if (!loaded) return <Loading />;
  
-
+    useEffect(()=>{
+        initGA();
+    },[]);
 
     const home = () => (
         <Fragment>
