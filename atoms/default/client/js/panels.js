@@ -1,5 +1,5 @@
 import { render, h, Fragment, createContext } from "preact";
-import { IconGreenG2s2, IconGreenG3s2, IconGreenG4s2, IconGreenG4s3, IconGreenG4s4, IconRedG1s2, IconRedG2s2, IconRedG3s2, IconRedG4s2, IconRedG4s3, IconRedG4s4 } from "./Icons";
+import { IconGreenG2s2, IconGreenG3s2, IconGreenG4s2, IconGreenG4s3, IconGreenG4s4, IconRedG1s2, IconRedG2s2, IconRedG2s4, IconRedG3s2, IconRedG4s2, IconRedG4s3, IconRedG4s4 } from "./Icons";
 
 
 const setHtml = (html) => ({dangerouslySetInnerHTML:{__html: html}});
@@ -9,7 +9,7 @@ export const GreenG1S3 = ({content}) => {
     return (
         <div className="content-panel">
                 <div className="panel-body">
-                    <p>Australia’s landmass, enormous solar and wind resources, and support for scientific research into new technologies such as hydrogen fuel put the country in a prime position to be a clean energy exporter.</p>
+                    <div {...setHtml(content)}></div>
                 </div>
         </div>
     )    
@@ -177,10 +177,6 @@ export const RedG1S3 = ({content}) => {
     return (
         <div className="content-panel">
                 <div className="panel-body">
-                    <div className="illo-box">
-                        <IconRedG1s2 />
-                        
-                    </div>
                     <div {...setHtml(content)}></div>
                 </div>
         </div>
@@ -191,10 +187,7 @@ export const RedG1S4 = ({content}) => {
     return (
         <div className="content-panel">
                 <div className="panel-body">
-                    <div className="illo-box">
-                        <IconRedG1s2 />
-                        
-                    </div>
+
                     <div {...setHtml(content)}></div>
                 </div>
         </div>
@@ -238,6 +231,9 @@ export const RedG2S4 = ({content}) => {
     return (
         <div className="content-panel">
                 <div className="panel-body">
+                    <div className="illo-box">
+                        <IconRedG2s4 />
+                    </div>
                     <div {...setHtml(content)}></div>
                 </div>
         </div>

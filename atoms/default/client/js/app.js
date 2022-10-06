@@ -89,8 +89,8 @@ const slideData = {
                 content: [
                     ContentPanels.RedG1S1,
                     ContentPanels.RedG1S2,
-                    ContentPanels.RedG1S2,
-                    ContentPanels.RedG1S2,
+                    ContentPanels.RedG1S3,
+                    ContentPanels.RedG1S4,
                 ],
                 images: [
                     'one-1.jpg',
@@ -396,23 +396,23 @@ const SlideNavRed = () => {
     return (
         <nav>
             <ul>
-                <li className={`${isActive('1.1')}`} data-year="1.1"><a href="#" data-group="1" onClick={handleClick}>1.1</a></li>
+                <li className={`${isActive('1.1')}`} data-year="1.1"><a href="#" data-group="1" onClick={handleClick}>1.1c</a></li>
                 <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
                 <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
                 <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
                 <li className={`${isActive('1.1')}`} data-year="1.1"><i /></li>
-                <li className={`${isActive('1.5')}`} data-year="1.5"><a href="#" data-group="2" onClick={handleClick}>1.5</a></li>
+                <li className={`${isActive('1.5')}`} data-year="1.5"><a href="#" data-group="2" onClick={handleClick}>1.5c</a></li>
                 <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
                 <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
                 <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
                 <li className={`${isActive('1.5')}`} data-year="1.5"><i /></li>
-                <li className={`${isActive('2')}`} data-year="2"><a href="#" data-group="3" onClick={handleClick}>2</a></li>
+                <li className={`${isActive('2')}`} data-year="2"><a href="#" data-group="3" onClick={handleClick}>2c</a></li>
                 <li className={`${isActive('2')}`} data-year="2"><i /></li>
                 <li className={`${isActive('2')}`} data-year="2"><i /></li>
                 <li className={`${isActive('2')}`} data-year="2"><i /></li>
                 <li className={`${isActive('2')}`} data-year="2"><i /></li>
                 <li className={`${isActive('2')}`} data-year="2"><i /></li>
-                <li className={`${isActive('3')}`} data-year="3"><a href="#" data-group="4" onClick={handleClick}>3</a></li>
+                <li className={`${isActive('3')}`} data-year="3"><a href="#" data-group="4" onClick={handleClick}>3c</a></li>
                 <li className={`${isActive('3')}`} data-year="3"><i /></li>
                 <li className={`${isActive('3')}`} data-year="3"><i /></li>
                 <li className={`${isActive('3')}`} data-year="3"><i /></li>
@@ -545,7 +545,7 @@ const Main = () => {
     const store = useSelector(s=>s);    
 
     const setView = (v) => {
-        if (isFirst) GA(v);
+        // if (isFirst) GA(v);
 
         setIsFirst(false);
         document.querySelector('.main-panel').scrollIntoView({behavior:'smooth', inline: 'start'});
@@ -562,7 +562,7 @@ const Main = () => {
    
  
     useEffect(()=>{
-        initGA();
+        initGA(content.analyticsId);
     },[]);
 
     const home = () => (

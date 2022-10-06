@@ -40,10 +40,10 @@ const GA = (type) => {
 
 export default GA;
 
-export function initGA () {
+export function initGA (id) {
     // console.log('initGA')
     // ReactGA.initialize('G-9EVGDRTQ7J', {debug: true});
-    ReactGA.initialize('UA-244269257-1');
+    ReactGA.initialize(id);
 }
 
 // https://www.mongodb.com/docs/atlas/api/data-api/
