@@ -204,3 +204,11 @@
         opacity: 1;
     }
 }
+
+.ios, .iphone {
+    .slide {
+        .bg2 {
+            background-attachment:scroll !important;
+        }
+    }
+}

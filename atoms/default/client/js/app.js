@@ -389,7 +389,7 @@ const SlideNavRed = () => {
     const isActive = yr => yr === year ? 'active': '';
     const handleClick = (e) => {
         e.preventDefault();
-        console.log(e.target.dataset)
+        // console.log(e.target.dataset)
         document.querySelector(`.slide-group.group-${e.target.dataset.group} .group-top`)
             .scrollIntoView({behavior: 'smooth'});
     }
@@ -425,14 +425,31 @@ const SlideNavRed = () => {
 const Slide = ({img, view, content}) => {
     const [ref, inView, entry] = useInView();
     const bgRef = useRef();
+    const [isIphone, setIsIphone] = useState(false);
+
+    useEffect(()=>{
+        setIsIphone(document.querySelector('.oscheck').className.indexOf('iphone') >= 0 ||
+            document.querySelector('.ios') != null);
+    },[]);
     useEffect(()=>{
 
         if (inView) {
-            if (entry.boundingClientRect.top > 0) {
-                gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, backgroundPositionY: "0%"})
+            if (isIphone) {
+                if (entry.boundingClientRect.top > 0) {
+                    gsap.from(bgRef.current, {ease: 'sine.out', duration: 1, scaleY: 1.2, transformOrigin:"50% 0"})
+                } else {
+                    gsap.from(bgRef.current, {ease: 'sine.out', duration: 1, scaleY: 1.2, transformOrigin:"50% 100%"})
+    
+                }
+ 
             } else {
-                gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, backgroundPositionY: "100%"})
 
+                if (entry.boundingClientRect.top > 0) {
+                    gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, backgroundPositionY: "0%"})
+                } else {
+                    gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, backgroundPositionY: "100%"})
+    
+                }
             }
             // console.log(content);
         }
@@ -646,9 +663,12 @@ const Main = () => {
 
 
 const App = () => {
+    const isIphone = window.navigator.userAgent.match(/iphone/ig) != null;
     return (
         <Provider store={store}>
-            <Main/>
+            <div className={`oscheck ${isIphone? 'iphone': ''}`}>
+                <Main/>
+            </div>
         </Provider>
 
     )

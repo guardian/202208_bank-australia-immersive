@@ -43,7 +43,7 @@ export default GA;
 export function initGA () {
     // console.log('initGA')
     // ReactGA.initialize('G-9EVGDRTQ7J', {debug: true});
-    ReactGA.initialize('UA-244269257-1', {debug: true});
+    ReactGA.initialize('UA-244269257-1');
 }
 
 // https://www.mongodb.com/docs/atlas/api/data-api/

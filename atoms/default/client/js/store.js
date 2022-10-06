@@ -58,7 +58,7 @@ const rootReducer = (state = initialState, action) => {
         case ACTION_DATA_LOADED:
             return {...state, dataLoaded: true};
         case ACTION_SET_YEAR:
-            console.log(action.payload)
+            // console.log(action.payload)
             return {...state, UI: {...state.UI, year: action.payload}};        
         case ACTION_SET_VIEW:
             return {...state, UI: {...state.UI, view: action.payload}};

@@ -115,15 +115,18 @@
       display: inline-block;
       max-width: 40rem;
       padding: 1rem;
-      margin-top: 5rem;
+      // margin-top: 5rem;
       h1 {
         margin: 0;
         font-weight: 400;
       }
+      @include mq(desktop) {
+        margin-top: 5rem;
+      }
     }
 
     .title-block {
-      margin-top: 10rem;
+      // margin-top: 10rem;
     }
 
   }
