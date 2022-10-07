@@ -422,7 +422,7 @@ const SlideNavRed = () => {
     )
 }
 
-const Slide = ({img, view, content}) => {
+const Slide = ({img, view, content, index}) => {
     const [ref, inView, entry] = useInView();
     const bgRef = useRef();
     const [isIphone, setIsIphone] = useState(false);
@@ -455,7 +455,7 @@ const Slide = ({img, view, content}) => {
         }
     },[inView])
     return (
-        <div className="slide" ref={ref}>
+        <div className={`slide slide-${index+1}`} ref={ref}>
             <div className="bg2"
                 ref={bgRef}
 
@@ -519,7 +519,7 @@ const SlideGroup = ({year, data, view, index }) => {
             <div className="group-top"></div>
             {
                 data.images.map((v, i) => 
-                    <Slide view={view} img={v} content={data.content[i] ? data.content[i]({content: store[`slide-${view}${index+1}${i+1}`]}) : false } />
+                    <Slide view={view} index={i} img={v} content={data.content[i] ? data.content[i]({content: store[`slide-${view}${index+1}${i+1}`]}) : false } />
                 )
             }            
         </div>        
@@ -545,7 +545,7 @@ const Main = () => {
     const store = useSelector(s=>s);    
 
     const setView = (v) => {
-        // if (isFirst) GA(v);
+        if (isFirst) GA(v);
 
         setIsFirst(false);
         document.querySelector('.main-panel').scrollIntoView({behavior:'smooth', inline: 'start'});
@@ -562,8 +562,9 @@ const Main = () => {
    
  
     useEffect(()=>{
+        if (!loaded) return;
         initGA(content.analyticsId);
-    },[]);
+    },[loaded]);
 
     const home = () => (
         <Fragment>

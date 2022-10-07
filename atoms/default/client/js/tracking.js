@@ -41,7 +41,7 @@ const GA = (type) => {
 export default GA;
 
 export function initGA (id) {
-    // console.log('initGA')
+    // console.log('initGA', id )
     // ReactGA.initialize('G-9EVGDRTQ7J', {debug: true});
     ReactGA.initialize(id);
 }

@@ -188,6 +188,29 @@
     }
 }
 
+@include mq($until: tablet) {
+
+    .view-green {
+
+        .group-2 {
+            .slide-3 .bg2 {
+                background-position-x: 70%;
+            }
+        }
+        .group-3 {
+            .slide-1 .bg2 {
+                background-position-x: 64%;
+            }
+        }
+        .group-4 {
+            .slide-4 .bg2 {
+                background-position-x: 84%;
+            }
+        }
+    }
+}
+
+
 .view-red {
     .content-panel {
         background-color: #FFF3EB;
