@@ -391,7 +391,7 @@ const SlideNavRed = () => {
         e.preventDefault();
         // console.log(e.target.dataset)
         document.querySelector(`.slide-group.group-${e.target.dataset.group} .group-top`)
-            .scrollIntoView({behavior: 'smooth'});
+            .scrollIntoView({behavior: 'smooth', block:'start'});
     }
     return (
         <nav>
