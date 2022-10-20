@@ -320,7 +320,9 @@ section.footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('<%=path %>/infographic.jpg') no-repeat 50%/cover;
+  background: url('<%=path %>/infographic.jpg') no-repeat 50%/cover, 
+    url('<%=path %>/green/2022-1.jpg'), 
+    url('<%=path %>/red/one-1.jpg');
 }
 .switch {
   text-align: center;
