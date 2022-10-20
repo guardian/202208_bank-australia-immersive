@@ -92,7 +92,7 @@
             left: 0;
             width: 100%;            
             transform-origin: 50% 0%;
-            background: no-repeat 50%/cover;
+            background: no-repeat 50% 50%/cover;
             background-attachment: fixed;
             overflow: hidden;
             .bgwr {
@@ -109,9 +109,19 @@
                 height: 100%;
                 left: 0;
                 transform-origin: 50% 0%;
-                background: no-repeat 50%/cover;
+                background: no-repeat 50% 50%/340%;
                 background-attachment: fixed;
+
+                @include mq(tablet) {
+                    background-size: 210%;
+                }
                 
+                @include mq(desktop) {
+                    background-size: 140%;
+                }
+                @include mq(wide) {
+                    background-size: cover;
+                }
             }
 
             .content {

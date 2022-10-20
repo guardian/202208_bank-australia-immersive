@@ -444,18 +444,13 @@ const Slide = ({img, view, content, index}) => {
  
             } else {
 
-                // if (entry.boundingClientRect.top > 0) {
-                //     gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, backgroundPositionY: "0%"})
-                // } else {
-                //     gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, backgroundPositionY: "100%"})
-    
-                // }
                 if (entry.boundingClientRect.top > 0) {
-                    gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, scale: 1.2})
+                    gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, backgroundPositionY: "0%"})
                 } else {
-                    gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, scale: 1.2})
+                    gsap.from(bgRef.current, {ease: 'sine.out', duration: 2, backgroundPositionY: "100%"})
     
                 }
+
             }
             // console.log(content);
         }
@@ -463,8 +458,9 @@ const Slide = ({img, view, content, index}) => {
     return (
         <div className={`slide slide-${index+1}`} ref={ref}>
             <div className="bgwr"
-                ref={bgRef}>
+                >
                 <div className="bg2"
+                    ref={bgRef}
 
                     style={{
                         backgroundImage: `url(${assetsPath}/${view}/${img})`,
