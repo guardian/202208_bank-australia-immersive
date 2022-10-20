@@ -109,15 +109,15 @@
                 height: 100%;
                 left: 0;
                 transform-origin: 50% 0%;
-                background: no-repeat 50% 50%/340%;
+                background: no-repeat 50% 50%/380%;
                 background-attachment: fixed;
 
                 @include mq(tablet) {
-                    background-size: 210%;
+                    background-size: 280%;
                 }
                 
                 @include mq(desktop) {
-                    background-size: 140%;
+                    background-size: 180%;
                 }
                 @include mq(wide) {
                     background-size: cover;
