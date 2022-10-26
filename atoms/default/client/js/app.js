@@ -591,15 +591,15 @@ const Main = () => {
                         <div className="prompt-wrap">
                             <div className="prompt">
                                 <IconSelect />
-                                <p>Select Code Red or Code Green to view the possible scenarios</p>
+                                <p>Select Code red or Code green to view the possible scenarios</p>
                             </div>
 
                         </div>
                         <div className="nav">
                             <a href="#"
-                                className={`${store.UI.view=='red'? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('red')}}><IconRed /><span>Code Red</span></a>
+                                className={`${store.UI.view=='red'? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('red')}}><IconRed /><span>Code red</span></a>
                             <a href="#"
-                                className={`green ${store.UI.view=='green' ? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('green')}}><IconGreen /><span>Code Green</span></a>
+                                className={`green ${store.UI.view=='green' ? 'active' : ''}`} onClick={(e)=>{e.preventDefault();setView('green')}}><IconGreen /><span>Code green</span></a>
                         </div>
                     </div>
 

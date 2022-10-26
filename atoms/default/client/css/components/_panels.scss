@@ -191,7 +191,7 @@
             p:first-child {
                 margin-top: 0;
             }
-            a {
+            a, a:active, a:visited {
                 color: var(--switch-color);
             }
         }
